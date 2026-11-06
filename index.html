@@ -123,6 +123,10 @@ aside{background:linear-gradient(180deg,#14233b,#0d1a2e)}
 const DOMS=['AI/ML','Data Analytics','Data Science','Full Stack Development'];
 const USERS=[
  {e:'vishnubabalsure@gmail.com',p:'Vishnu@04',role:'admin',name:'Vishnu Babalsure',label:'Admin · Management'}];
+/* Team Leaders listed here can log in on EVERY device. Add more lines in the same format. */
+const BUILT_IN=[
+ {id:'TL-02',name:'Kiran',e:'kiran606283@gmail.com',p:'kiran',team:'Team 2'}
+];
 const ist=()=>new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Kolkata'}));
 const today=()=>{const d=ist();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -142,7 +146,7 @@ $('#sp').onchange=e=>{$('#pw').type=e.target.checked?'text':'password'};
 $('#lf').addEventListener('submit',e=>{e.preventDefault();
  const em=$('#em').value.trim().toLowerCase(),pw=$('#pw').value.trim();
  const L0=load();S=L0||S||seed();if(!S.reports)S.reports=[];if(!S.leaders)S.leaders=[{id:'TL-02',name:'Kiran',e:'kiran606283@gmail.com',p:'kiran',team:'Team 2'}];
- const all=[...USERS,...S.leaders.map(l=>({e:String(l.e||'').toLowerCase(),p:String(l.p||''),role:'tl',tlid:l.id,name:l.name,team:l.team,label:'Team Leader · '+l.team}))];
+ const all=[...USERS,...BUILT_IN.map(l=>({e:l.e.toLowerCase(),p:l.p,role:'tl',tlid:l.id,name:l.name,team:l.team,label:'Team Leader · '+l.team})),...S.leaders.map(l=>({e:String(l.e||'').toLowerCase(),p:String(l.p||''),role:'tl',tlid:l.id,name:l.name,team:l.team,label:'Team Leader · '+l.team}))];
  const u=all.find(u=>u.e===em&&u.p===pw);
  if(!u){const known=all.some(u=>u.e===em);$('#err').textContent=known?'Password is incorrect. It is case-sensitive, so check capital letters.':'This email is not registered. Check the spelling.';const c=$('.lcard');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');return}
  me=u;const bt=$('#lbtn');bt.classList.add('ld');bt.textContent='Signing you in';setTimeout(()=>{bt.classList.remove('ld');bt.textContent='Sign in';save();start()},850)});
